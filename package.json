@@ -1,0 +1,43 @@
+{
+  "name": "starry",
+  "version": "0.0.0",
+  "description": "Node.js plugin system. 繁星✨, 基于 Node.js 的插件系统",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsup-node",
+    "dev": "tsup-node --watch --onSuccess \"node dist/index.js\"",
+    "start": "npm run build && node dist/index.js"
+  },
+  "author": {
+    "name": "sovlookup",
+    "email": "gonorth@qq.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@sinclair/typebox": "^0.23.4",
+    "@swc/helpers": "^0.3.6",
+    "@swc/wasm": "^1.2.155",
+    "@types/fs-extra": "^9.0.13",
+    "commander": "^9.0.0",
+    "fastify": "^3.27.4",
+    "fastify-swagger": "^5.0.0",
+    "fs-extra": "^10.0.1",
+    "pnpm": "^6.32.3",
+    "regenerator-runtime": "^0.13.9",
+    "ts-node": "^10.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.21",
+    "tsup": "^5.12.1",
+    "typescript": "^4.6.2"
+  },
+  "tsup": {
+    "splitting": false,
+    "sourcemap": true,
+    "clean": true,
+    "target": "esnext",
+    "entryPoints": [
+      "index.ts"
+    ]
+  }
+}
