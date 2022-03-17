@@ -29,7 +29,7 @@ const execPnpm = async (execPath: string, argv: string[]): Promise<string> =>
     const worker = new Worker(
       path.resolve(
         path.parse(decodeURI(new URL(import.meta.url).pathname)).dir,
-        '..',
+        '../..',
         'node_modules/pnpm/dist/pnpm.cjs',
       ),
       {

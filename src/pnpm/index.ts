@@ -15,19 +15,25 @@ const updateModule = async (...name: string[]): Promise<string> =>
   await execPnpm(modulePath, ['update', ...name])
 
 const listModule = async (): Promise<{ [name: string]: string }> => {
-  return (await fs.readJSON(path.resolve(modulePath, 'package.json')))
-    .dependencies
+  return (
+    (await fs.readJSON(path.resolve(modulePath, 'package.json')))
+      ?.dependencies ?? {}
+  )
 }
 
-// todo 通过 ts-node load ts插件
-const loadModule = async (path: string): Promise<unknown> => {
-  let m = await import(path)
-
+const loadModule = async (moduleName: string): Promise<unknown> => {
+  // import
+  let i = await import(path.resolve(modulePath, 'index.js'))
+  // cjs
+  if (i?.default !== undefined) {
+    i = i.default
+  }
+  let m = await i(moduleName)
   // cjs
   if (m?.default !== undefined) {
     m = m.default
   }
-
+  // target module
   return m
 }
 

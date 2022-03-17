@@ -4,8 +4,9 @@ import config from '../config'
 import swagger from 'fastify-swagger'
 import moduleManager from './plugins/moduleManage'
 import pkgjson from '../../package.json'
+import moduleRunner from './plugins/moduleRunner'
 
-const server = fastify({ logger: true })
+const server = fastify({ logger: config.log === 'false' ? false : true })
 
 server.register(swagger as any, {
   routePrefix: '/doc',
@@ -26,9 +27,13 @@ server.register(moduleManager, {
   prefix: '/api',
 })
 
+server.register(moduleRunner, {
+  prefix: '/api',
+})
+
 const startServer = async () => {
   try {
-    await server.listen({ port: config.port })
+    await server.listen({ port: Number(config.port) })
   } catch (err) {
     server.log.error(err)
     process.exit(1)

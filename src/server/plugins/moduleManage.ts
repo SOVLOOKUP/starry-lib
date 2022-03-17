@@ -43,20 +43,6 @@ const moduleManage: FastifyPluginCallback = (fastify, opts, done) => {
     async (req) => await installModule(...req.body),
   )
 
-  fastify.delete<{ Body: ModulesType; Reply: string }>(
-    path,
-    {
-      schema: {
-        description: '卸载模块',
-        tags: ['模块管理'],
-        body: Modules,
-        response: {
-          200: Type.String(),
-        },
-      },
-    },
-    async (req) => await removeModule(...req.body),
-  )
 
   fastify.put<{ Body: ModulesType; Reply: string }>(
     path,
@@ -73,6 +59,21 @@ const moduleManage: FastifyPluginCallback = (fastify, opts, done) => {
     async (req) => await updateModule(...req.body),
   )
 
+  fastify.delete<{ Body: ModulesType; Reply: string }>(
+    path,
+    {
+      schema: {
+        description: '卸载模块',
+        tags: ['模块管理'],
+        body: Modules,
+        response: {
+          200: Type.String(),
+        },
+      },
+    },
+    async (req) => await removeModule(...req.body),
+  )
+  
   done()
 }
 
